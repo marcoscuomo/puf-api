@@ -1,1 +1,1 @@
-const x = () => a + 10;
+const x = (a) => a + 10;
