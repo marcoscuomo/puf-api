@@ -1,0 +1,28 @@
+{
+  "name": "puf-api",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/marcoscuomo/puf-api",
+  "author": "Marcos Souza <marcos.souza@beeleads.com.br>",
+  "license": "MIT",
+  "scripts": {
+    "fix": "echo 123",
+    "prepare": "husky install"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "./src/**/*.{js,ts,md,json}": [
+      "yarn fix"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.3"
+  }
+}
