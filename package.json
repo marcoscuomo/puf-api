@@ -7,10 +7,10 @@
   "license": "MIT",
   "scripts": {
     "fix": "run-s \"fix:* {@}\" --",
-    "fix-lint": "eslint --fix --no-error-on-unmatched-pattern",
+    "fix:lint": "eslint --fix --no-error-on-unmatched-pattern",
     "fix:format": "prettier --write",
     "format": "yarn fix:format 'src/**/*.(js|ts|md|json)'",
-    "lint": "yarn fix:lint srx/**/*.{js,ts,md,json}",
+    "lint": "yarn fix:lint src/**/*.{js,ts,md,json}",
     "prepare": "husky install"
   },
   "commitlint": {
@@ -33,5 +33,8 @@
     "lint-staged": "^10.5.4",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1"
+  },
+  "dependencies": {
+    "eslint": "^8.23.0"
   }
 }
