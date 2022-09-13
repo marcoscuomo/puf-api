@@ -5,7 +5,7 @@ services:
     image: postgres:13.2
     restart: always
     ports:
-      - $DB_PORT:543
+      - $DB_PORT:5432
     environment:
       - POSTGRES_USER=$DB_USER
       - POSTGRES_PASSWORD=$DB_PASS
