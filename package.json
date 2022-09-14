@@ -50,6 +50,7 @@
     "dotenv": "^16.0.2",
     "dotenv-safe": "^8.2.0",
     "eslint": "^8.23.0",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "prisma": "^4.3.1"
