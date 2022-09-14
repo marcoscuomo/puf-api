@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import { prisma } from "~/data";
 
 export const login = async (ctx) => {
@@ -40,8 +41,16 @@ export const list = async (ctx) => {
 
 export const create = async (ctx) => {
   try {
+    const saltRounds = 10;
+    const { name, email, password } = ctx.request.body;
+    const hashPassword = await bcrypt.hash(password, saltRounds);
+
     const user = await prisma.user.create({
-      data: ctx.request.body,
+      data: {
+        name,
+        email,
+        password: hashPassword,
+      },
     });
 
     ctx.body = user;
