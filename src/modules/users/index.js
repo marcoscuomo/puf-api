@@ -4,12 +4,9 @@ import { prisma } from "~/data";
 
 export const login = async (ctx) => {
   try {
-    // const { email, password } = ctx.request.body;
-    const [, credentials] = ctx.request.headers.authorization.split(" ");
-
-    const [email, password] = Buffer.from(credentials, "base64")
-      .toString()
-      .split(":");
+    const [email, password] = decodedBasicToken(
+      ctx.request.headers.authorization
+    );
 
     const user = await prisma.user.findUnique({
       where: {
@@ -104,4 +101,11 @@ export const remove = async (ctx) => {
     ctx.status = 500;
     ctx.body = "Ops! Something went wrong";
   }
+};
+
+export const decodedBasicToken = (authHeader) => {
+  console.log(authHeader.split(" "));
+  const [, credentials] = authHeader.split(" ");
+
+  return Buffer.from(credentials, "base64").toString().split(":");
 };
