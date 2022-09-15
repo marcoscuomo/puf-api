@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
 import { prisma } from "~/data";
+import { decodedBasicToken } from "./services";
 
 export const login = async (ctx) => {
   try {
@@ -101,11 +103,4 @@ export const remove = async (ctx) => {
     ctx.status = 500;
     ctx.body = "Ops! Something went wrong";
   }
-};
-
-export const decodedBasicToken = (authHeader) => {
-  console.log(authHeader.split(" "));
-  const [, credentials] = authHeader.split(" ");
-
-  return Buffer.from(credentials, "base64").toString().split(":");
 };

@@ -11,6 +11,7 @@
     "fix:format": "prettier --write",
     "format": "yarn fix:format 'src/**/*.(js|ts|md|json)'",
     "lint": "yarn fix:lint src/**/*.{js,ts,md,json}",
+    "test": "yarn jest",
     "prepare": "husky install",
     "dev": "nodemon --exec babel-node -- -r dotenv-safe/config src/index.js",
     "prebuild": "rm -rf ./dist",
