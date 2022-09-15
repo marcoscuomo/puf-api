@@ -4,17 +4,27 @@ import { prisma } from "~/data";
 
 export const login = async (ctx) => {
   try {
-    const { email, password } = ctx.request.body;
-    const user = await prisma.user.findFirst({
+    const [email, password] = decodedBasicToken(
+      ctx.request.headers.authorization
+    );
+
+    const user = await prisma.user.findUnique({
       where: {
         email,
-        password,
       },
     });
 
     if (!user) {
       ctx.status = 404;
       ctx.body = "User not found";
+      return;
+    }
+
+    const passwordEqual = await bcrypt.compare(password, user.password);
+
+    if (!passwordEqual) {
+      ctx.status = 404;
+      ctx.body = "User or password is incorrect";
       return;
     }
 
@@ -91,4 +101,11 @@ export const remove = async (ctx) => {
     ctx.status = 500;
     ctx.body = "Ops! Something went wrong";
   }
+};
+
+export const decodedBasicToken = (authHeader) => {
+  console.log(authHeader.split(" "));
+  const [, credentials] = authHeader.split(" ");
+
+  return Buffer.from(credentials, "base64").toString().split(":");
 };

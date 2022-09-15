@@ -11,4 +11,4 @@ router.put("/users/:id", update);
 router.delete("/users/:id", remove);
 
 // Auth
-router.post("/login", login);
+router.get("/login", login);
