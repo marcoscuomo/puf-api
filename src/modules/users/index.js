@@ -4,7 +4,12 @@ import { prisma } from "~/data";
 
 export const login = async (ctx) => {
   try {
-    const { email, password } = ctx.request.body;
+    // const { email, password } = ctx.request.body;
+    const [, credentials] = ctx.request.headers.authorization.split(" ");
+
+    const [email, password] = Buffer.from(credentials, "base64")
+      .toString()
+      .split(":");
 
     const user = await prisma.user.findUnique({
       where: {
