@@ -57,10 +57,5 @@
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "prisma": "^4.3.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "yarn test"
-    }
   }
 }
