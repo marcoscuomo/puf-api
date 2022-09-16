@@ -1,6 +1,6 @@
 import { decodedBasicToken, CredentialsFormatError } from "./services";
 
-describe("User Module", () => {
+describe("User Service", () => {
   it("should return credentials by basic authentication token", () => {
     const credentials = {
       email: "johndoe@gmail.com",
