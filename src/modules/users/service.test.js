@@ -1,4 +1,4 @@
-import { decodedBasicToken } from "./services";
+import { decodedBasicToken, CredentialsFormatError } from "./services";
 
 describe("User Module", () => {
   it("should return credentials by basic authentication token", () => {
@@ -31,6 +31,6 @@ describe("User Module", () => {
 
     const result = () => decodedBasicToken(basicToken);
 
-    expect(result).toThrowError("Wrong dredentials format");
+    expect(result).toThrowError(CredentialsFormatError);
   });
 });
