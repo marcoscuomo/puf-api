@@ -6,6 +6,7 @@
   "author": "Marcos Souza <marcos.souza@beeleads.com.br>",
   "license": "MIT",
   "scripts": {
+    "db:migrate": "yarn prisma migrate dev --preview-feature",
     "fix": "run-s \"fix:* {@}\" --",
     "fix:lint": "eslint --fix --no-error-on-unmatched-pattern",
     "fix:format": "prettier --write",
