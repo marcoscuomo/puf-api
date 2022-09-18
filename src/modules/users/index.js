@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 
 import { prisma } from "~/data";
 import { decodedBasicToken } from "./services";
+import "./model";
 
 export const login = async (ctx) => {
   try {
@@ -13,6 +14,7 @@ export const login = async (ctx) => {
     const user = await prisma.user.findUnique({
       where: {
         email,
+        password,
       },
     });
 
@@ -22,13 +24,13 @@ export const login = async (ctx) => {
       return;
     }
 
-    const passwordEqual = await bcrypt.compare(password, user.password);
+    // const passwordEqual = await bcrypt.compare(password, user.password);
 
-    if (!passwordEqual) {
-      ctx.status = 404;
-      ctx.body = "User or password is incorrect";
-      return;
-    }
+    // if (!passwordEqual) {
+    //   ctx.status = 404;
+    //   ctx.body = "User or password is incorrect";
+    //   return;
+    // }
 
     const token = jwt.sign({ sub: user.id }, process.env.SECRET_KEY);
 

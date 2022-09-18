@@ -1,5 +1,6 @@
 import request from "supertest/";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 import { prisma } from "~/data";
 import { app } from "./server-setup";
@@ -37,16 +38,19 @@ describe("User Routes", () => {
     const saltRounds = 10;
     const hashPassword = await bcrypt.hash(password, saltRounds);
 
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: { email, password: hashPassword, name },
     });
 
     const result = await request(server).get("/login").auth(email, password);
+    const decodedToken = jwt.verify(result.body.token, process.env.SECRET_KEY);
 
     expect(result.status).toBe(200);
     expect(result.body).toBeTruthy();
-    expect(result.body.user.id).toBeTruthy();
+    expect(result.body.user.id).toBe(user.id);
     expect(result.body.user.name).toBeTruthy();
     // expect(result.body.user.password).toBeFalsy();
+
+    expect(decodedToken.sub).toBe(user.id);
   });
 });
