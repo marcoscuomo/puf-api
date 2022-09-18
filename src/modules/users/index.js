@@ -1,9 +1,8 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-import { prisma } from "~/data";
+import * as model from "./model";
 import { decodedBasicToken } from "./services";
-import "./model";
 
 export const login = async (ctx) => {
   try {
@@ -11,7 +10,7 @@ export const login = async (ctx) => {
       ctx.request.headers.authorization
     );
 
-    const user = await prisma.user.findUnique({
+    const user = await model.findUnique({
       where: {
         email,
         password,
@@ -44,7 +43,7 @@ export const login = async (ctx) => {
 
 export const list = async (ctx) => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await model.findMany();
     ctx.body = users;
   } catch (error) {
     console.log(error);
@@ -59,7 +58,7 @@ export const create = async (ctx) => {
     const { name, email, password } = ctx.request.body;
     const hashPassword = await bcrypt.hash(password, saltRounds);
 
-    const user = await prisma.user.create({
+    const user = await model.create({
       data: {
         name,
         email,
@@ -79,7 +78,7 @@ export const update = async (ctx) => {
   try {
     const { name, email } = ctx.request.body;
 
-    const user = await prisma.user.update({
+    const user = await model.update({
       where: { id: ctx.params.id },
       data: {
         name,
@@ -96,7 +95,7 @@ export const update = async (ctx) => {
 
 export const remove = async (ctx) => {
   try {
-    await prisma.user.delete({
+    await model.delete({
       where: { id: ctx.params.id },
     });
     ctx.body = { id: ctx.params.id };

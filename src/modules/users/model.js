@@ -18,6 +18,7 @@ import { omit } from "ramda";
 //   }, {});
 // }
 
+/** MIDDLEWARES **/
 const passwordCheck = async (params, next) => {
   const { password: passwordPlainText, ...where } = params.args.where;
   const result = await next(
@@ -69,3 +70,11 @@ prisma.$use(async (params, next) => {
 
   return result;
 });
+
+/** METHODS **/
+
+export const findUnique = prisma.user.findUnique;
+export const findMany = prisma.user.findMany;
+export const create = prisma.user.create;
+export const update = prisma.user.update;
+export const remove = prisma.user.detele;
